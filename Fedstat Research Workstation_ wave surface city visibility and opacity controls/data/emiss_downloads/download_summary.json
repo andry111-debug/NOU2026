@@ -1,0 +1,52 @@
+[
+  {
+    "need": "D12",
+    "indicator": "57341",
+    "rows": 196,
+    "period": "2015-01..2026-05",
+    "file": "D12_unemployment_57341.csv",
+    "title": "Уровень безработицы (по методологии Международной организации труда) (оперативные данные)"
+  },
+  {
+    "need": "D13",
+    "indicator": "31557",
+    "rows": 314078,
+    "period": "1990..2025",
+    "file": "D13_population_31557.csv",
+    "title": "Численность постоянного населения на 1 января"
+  },
+  {
+    "need": "D22",
+    "indicator": "31606",
+    "rows": 30131,
+    "period": "1990..2023",
+    "file": "D22_births_31606.csv",
+    "title": "Число родившихся (без мертворожденных) за год"
+  },
+  {
+    "need": "D22",
+    "indicator": "31617",
+    "rows": 30144,
+    "period": "1990..2023",
+    "file": "D22_deaths_31617.csv",
+    "title": "Число умерших за год"
+  },
+  {
+    "need": "D11",
+    "indicator": "57039",
+    "error": "HTTP Error 503: Service Temporarily Unavailable"
+  },
+  {
+    "need": "D11",
+    "indicator": "56791",
+    "error": "HTTP Error 503: Service Temporarily Unavailable"
+  },
+  {
+    "need": "D20",
+    "indicator": "58704",
+    "rows": 470,
+    "period": "2017..2021",
+    "file": "D20_ksr_guests_58704.csv",
+    "title": "Численность лиц, размещенных в коллективных средствах размещения, по отношению к 2012 году"
+  }
+]
