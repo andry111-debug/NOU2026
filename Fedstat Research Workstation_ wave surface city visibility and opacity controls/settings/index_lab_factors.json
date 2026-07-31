@@ -448,5 +448,30 @@
     "missing_policy": "региональная гармонизация включена; агрегаты и исторические территории исключаются; сырые Fedstat CSV не изменены",
     "passport_status": "готов к автоподбору v0",
     "note": "D04; Fedstat value_id=1744147; цель прошла субъектную гармонизацию, нулей и экстремумов нет; QC v0: цель Fedstat 31074 уже выражена как процент к предыдущему месяцу; для подбора используем period_zscore.; D04 как кандидат тела/контрольный сервисный слой.; есть неполное покрытие регионов/месяцев, но ряд пригоден для разведки v0"
+  },
+  {
+    "factor_id": "env_ipc_utilities",
+    "name": "ИПЦ услуги ЖКХ",
+    "role": "environment",
+    "source_path": "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\env_ipc_utilities.csv",
+    "region_column": "region",
+    "period_column": "period",
+    "value_column": "value",
+    "transform": "period_zscore",
+    "enabled": true,
+    "subtype": "среда: тарифы ЖКХ",
+    "source_name": "Fedstat / Росстат, показатель 31074",
+    "frequency": "месяц",
+    "level": "регион",
+    "units": "процент к предыдущему месяцу",
+    "value_description": "Услуги организаций ЖКХ, оказываемые населению",
+    "period_start": "2008-01",
+    "period_end": "2026-06",
+    "expected_sign": "+/-",
+    "allowed_lags": "0,1,2,3,6",
+    "quality_status": "скачано, требует проверки",
+    "missing_policy": "не проверено",
+    "passport_status": "готов к разведке",
+    "note": "D25; Fedstat value_id=1788763"
   }
 ]

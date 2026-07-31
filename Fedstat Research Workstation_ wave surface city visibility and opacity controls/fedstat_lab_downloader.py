@@ -23,6 +23,7 @@ import pandas as pd
 import main as fedstat_base
 from index_lab_core import (
     ROLE_BODY,
+    ROLE_ENVIRONMENT,
     ROLE_TARGET,
     TRANSFORM_PERIOD_ZSCORE,
     FactorSpec,
@@ -211,9 +212,24 @@ CANDIDATE_SERIES = [
     },
 ]
 
+ENVIRONMENT_SERIES = [
+    {
+        "need_id": "D25",
+        "factor_id": "env_ipc_utilities",
+        "title": "ИПЦ услуги ЖКХ",
+        "fedstat_value_id": "1788763",
+        "fedstat_title": "Услуги организаций ЖКХ, оказываемые населению",
+        "role": ROLE_ENVIRONMENT,
+        "subtype": "среда: тарифы ЖКХ",
+        "expected_sign": "+/-",
+        "allowed_lags": "0,1,2,3,6",
+    },
+]
+
 DOWNLOAD_PACKAGES = {
     "targets_d01_d04": TARGET_SERIES,
     "candidates_d05_d08": CANDIDATE_SERIES,
+    "env_d25_utilities": ENVIRONMENT_SERIES,
 }
 
 MONTH_ORDER = {
@@ -611,19 +627,34 @@ def download_package(
     }
 
 
-def main(timeout: int = 240) -> int:
+def main(timeout: int = 240, only_package: str | None = None) -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     client = opener()
     print("Loading Fedstat indicator page...")
     page_html = fetch_indicator_page(client, timeout)
 
+    packages = DOWNLOAD_PACKAGES
+    if only_package:
+        packages = {k: v for k, v in DOWNLOAD_PACKAGES.items() if k == only_package}
+        if not packages:
+            raise SystemExit(f"Unknown package: {only_package}")
+
     package_results: Dict[str, Any] = {}
-    for package_id, series_definitions in DOWNLOAD_PACKAGES.items():
+    for package_id, series_definitions in packages.items():
         try:
             package_results[package_id] = download_package(client, page_html, package_id, series_definitions, timeout)
         except Exception as exc:
             package_results[package_id] = {"status": "failed", "error": str(exc)}
             print(f"{package_id} failed: {exc}")
+
+    # при фильтре пакетов не терять прежние записи манифеста
+    if MANIFEST_PATH.exists():
+        try:
+            prev = json.loads(MANIFEST_PATH.read_text(encoding="utf-8")).get("packages", {})
+            for k, v in prev.items():
+                package_results.setdefault(k, v)
+        except Exception:
+            pass
 
     ok_packages = {key: value for key, value in package_results.items() if value.get("status") == "ok"}
     manifest = {
@@ -648,4 +679,5 @@ def main(timeout: int = 240) -> int:
 
 if __name__ == "__main__":
     timeout_arg = int(sys.argv[1]) if len(sys.argv) > 1 else 240
-    raise SystemExit(main(timeout_arg))
+    package_arg = sys.argv[2] if len(sys.argv) > 2 else None
+    raise SystemExit(main(timeout_arg, package_arg))

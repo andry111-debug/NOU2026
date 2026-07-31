@@ -1,9 +1,33 @@
 {
-  "created_at": "2026-08-01T00:10:55",
+  "created_at": "2026-08-01T01:17:21",
   "indicator_url": "https://www.fedstat.ru/indicator/31074",
   "indicator_id": "31074",
   "ssl_verification": "disabled because Fedstat certificate validation failed in this environment",
   "packages": {
+    "env_d25_utilities": {
+      "status": "ok",
+      "metadata": {
+        "indicator_id": "31074",
+        "title": "Индексы потребительских цен на товары и услуги",
+        "unit": "процент"
+      },
+      "raw_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_env_d25_utilities_y2002_2014_20260801_011719.xls",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_env_d25_utilities_y2015_2026_20260801_011720.xls"
+      ],
+      "chunk_errors": [],
+      "processed_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_env_d25_utilities_long.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\env_ipc_utilities.csv"
+      ],
+      "rows": 18842,
+      "series": {
+        "env_ipc_utilities": 18842
+      },
+      "period_min": "2008-01",
+      "period_max": "2026-06",
+      "regions": 87
+    },
     "targets_d01_d04": {
       "status": "ok",
       "metadata": {
@@ -81,16 +105,9 @@
       "regions": 104
     }
   },
-  "ok_package_count": 2,
-  "rows": 310407,
+  "ok_package_count": 3,
+  "rows": 329249,
   "downloaded_need_ids": [
-    "D01",
-    "D02",
-    "D03",
-    "D04",
-    "D05",
-    "D06",
-    "D07",
-    "D08"
+    "D25"
   ]
 }
