@@ -31,6 +31,7 @@ DATA = APP / "data"
 FOOD = DATA / "fedstat_targets" / "processed" / "target_ipc_food.csv"
 HARM = DATA / "geo" / "fedstat_region_harmonization.csv"
 ADJ = DATA / "geo" / "adjacency_subjects.csv"
+RAIL = DATA / "geo" / "rail_stations_by_region.csv"
 OUT = APP / "index_lab_output" / "base_model"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -104,7 +105,18 @@ def build_weights(meta: pd.DataFrame) -> dict[str, np.ndarray]:
     covered = int((W_adj.sum(axis=1) > 0).sum())
     print(f"adjacency: edges placed={placed}/{len(edges)}; "
           f"subjects with >=1 neighbour={covered}/{n}")
-    return {"fd": rownorm(W_fd), "dist": rownorm(W_dist), "adj": rownorm(W_adj)}
+    out = {"fd": rownorm(W_fd), "dist": rownorm(W_dist), "adj": rownorm(W_adj)}
+    # rail-weighted adjacency: сосед с крупным ЖД-узлом весит больше
+    if RAIL.exists():
+        rail = pd.read_csv(RAIL, encoding="utf-8-sig").set_index("subject")["rail_stations"]
+        s = rail.reindex(subjects).fillna(0.0).to_numpy(dtype=float)
+        W_rail = W_adj * np.sqrt(s)[None, :]
+        print(f"rail weights: subjects with stations={int((s > 0).sum())}/{n}, "
+              f"total stations={int(s.sum())}")
+        out["railadj"] = rownorm(W_rail)
+    else:
+        print("rail weights: rail_stations_by_region.csv not found, variant skipped")
+    return out
 
 
 def transported(panel: pd.DataFrame, W: np.ndarray, lag: int) -> pd.DataFrame:
@@ -179,6 +191,8 @@ def main() -> int:
         "M2_dist":    own + dist,
         "M3_adj":     own + adj,
     }
+    if "railadj" in weights:
+        models["M4_railadj"] = own + [f"railadj_l{L}" for L in LAGS]
     report = {"meta": {"subjects": n_subj, "periods": n_per, "obs": n_obs,
                        "start": START, "end": END, "lags": LAGS}, "models": {}}
 
