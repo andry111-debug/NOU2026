@@ -30,6 +30,7 @@ APP = Path(__file__).resolve().parent.parent
 DATA = APP / "data"
 FOOD = DATA / "fedstat_targets" / "processed" / "target_ipc_food.csv"
 HARM = DATA / "geo" / "fedstat_region_harmonization.csv"
+ADJ = DATA / "geo" / "adjacency_subjects.csv"
 OUT = APP / "index_lab_output" / "base_model"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -77,7 +78,9 @@ def rownorm(W: np.ndarray) -> np.ndarray:
 
 
 def build_weights(meta: pd.DataFrame) -> dict[str, np.ndarray]:
-    n = len(meta)
+    subjects = list(meta.index)
+    idx = {s: i for i, s in enumerate(subjects)}
+    n = len(subjects)
     fd = meta["federal_district"].values
     W_fd = np.zeros((n, n))
     for i in range(n):
@@ -89,7 +92,19 @@ def build_weights(meta: pd.DataFrame) -> dict[str, np.ndarray]:
     mask = ~np.eye(n, dtype=bool)
     W_dist[mask] = 1.0 / dist[mask]
     np.fill_diagonal(W_dist, 0.0)
-    return {"fd": rownorm(W_fd), "dist": rownorm(W_dist)}
+    # adjacency (shared border) from precomputed edge list
+    W_adj = np.zeros((n, n))
+    edges = pd.read_csv(ADJ, encoding="utf-8-sig")
+    placed = 0
+    for a, b in zip(edges["subject_a"], edges["subject_b"]):
+        if a in idx and b in idx:
+            W_adj[idx[a], idx[b]] = 1.0
+            W_adj[idx[b], idx[a]] = 1.0
+            placed += 1
+    covered = int((W_adj.sum(axis=1) > 0).sum())
+    print(f"adjacency: edges placed={placed}/{len(edges)}; "
+          f"subjects with >=1 neighbour={covered}/{n}")
+    return {"fd": rownorm(W_fd), "dist": rownorm(W_dist), "adj": rownorm(W_adj)}
 
 
 def transported(panel: pd.DataFrame, W: np.ndarray, lag: int) -> pd.DataFrame:
@@ -150,6 +165,7 @@ def main() -> int:
     own = [f"own_l{L}" for L in LAGS]
     fd = [f"fd_l{L}" for L in LAGS]
     dist = [f"dist_l{L}" for L in LAGS]
+    adj = [f"adj_l{L}" for L in LAGS]
 
     n_subj = frame.index.get_level_values("subject").nunique()
     n_per = frame.index.get_level_values("t").nunique()
@@ -161,6 +177,7 @@ def main() -> int:
         "M0_local":   own,
         "M1_fd":      own + fd,
         "M2_dist":    own + dist,
+        "M3_adj":     own + adj,
     }
     report = {"meta": {"subjects": n_subj, "periods": n_per, "obs": n_obs,
                        "start": START, "end": END, "lags": LAGS}, "models": {}}
