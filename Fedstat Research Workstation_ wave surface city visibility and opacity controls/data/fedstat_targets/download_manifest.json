@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-07-30T19:17:43",
+  "created_at": "2026-08-01T00:10:55",
   "indicator_url": "https://www.fedstat.ru/indicator/31074",
   "indicator_id": "31074",
   "ssl_verification": "disabled because Fedstat certificate validation failed in this environment",
@@ -11,23 +11,27 @@
         "title": "Индексы потребительских цен на товары и услуги",
         "unit": "процент"
       },
-      "raw_path": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_targets_d01_d04_20260730_191632.xls",
-      "processed_paths": [
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_targets_d01_d04_long.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_all.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_food.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_nonfood.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_services.csv"
+      "raw_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_targets_d01_d04_y2002_2014_20260801_000847.xls",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_targets_d01_d04_y2015_2026_20260801_000853.xls"
       ],
-      "rows": 87392,
+      "chunk_errors": [],
+      "processed_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_targets_d01_d04_long.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_all.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_food.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_nonfood.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\target_ipc_services.csv"
+      ],
+      "rows": 101660,
       "series": {
-        "target_ipc_all": 21848,
-        "target_ipc_food": 21848,
-        "target_ipc_nonfood": 21848,
-        "target_ipc_services": 21848
+        "target_ipc_all": 25415,
+        "target_ipc_food": 25415,
+        "target_ipc_nonfood": 25415,
+        "target_ipc_services": 25415
       },
       "period_min": "2002-01",
-      "period_max": "2023-01",
+      "period_max": "2026-06",
       "regions": 104
     },
     "candidates_d05_d08": {
@@ -37,44 +41,48 @@
         "title": "Индексы потребительских цен на товары и услуги",
         "unit": "процент"
       },
-      "raw_path": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_candidates_d05_d08_20260730_191740.xls",
-      "processed_paths": [
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_candidates_d05_d08_long.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_no_alcohol.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_ex_optional.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_optional.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_ex_veg_pot_fruit.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_nonfood_optional.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_nonfood_ex_optional.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_motor_fuel.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_gasoline.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_diesel.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_passenger_transport.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_rail_transport.csv",
-        "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_air_transport.csv"
+      "raw_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_candidates_d05_d08_y2002_2014_20260801_000953.xls",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_candidates_d05_d08_y2015_2026_20260801_001053.xls"
       ],
-      "rows": 182126,
+      "chunk_errors": [],
+      "processed_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_candidates_d05_d08_long.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_no_alcohol.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_ex_optional.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_optional.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_food_ex_veg_pot_fruit.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_nonfood_optional.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_nonfood_ex_optional.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_motor_fuel.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_gasoline.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_diesel.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_passenger_transport.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_rail_transport.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_air_transport.csv"
+      ],
+      "rows": 208747,
       "series": {
-        "body_ipc_air_transport": 17680,
-        "body_ipc_diesel": 17604,
+        "body_ipc_air_transport": 19507,
+        "body_ipc_diesel": 21171,
         "body_ipc_food_ex_optional": 5411,
-        "body_ipc_food_ex_veg_pot_fruit": 21848,
-        "body_ipc_food_no_alcohol": 21848,
+        "body_ipc_food_ex_veg_pot_fruit": 25415,
+        "body_ipc_food_no_alcohol": 25415,
         "body_ipc_food_optional": 5411,
-        "body_ipc_gasoline": 21935,
-        "body_ipc_motor_fuel": 17517,
+        "body_ipc_gasoline": 25502,
+        "body_ipc_motor_fuel": 21084,
         "body_ipc_nonfood_ex_optional": 5411,
         "body_ipc_nonfood_optional": 5411,
-        "body_ipc_passenger_transport": 21935,
-        "body_ipc_rail_transport": 20115
+        "body_ipc_passenger_transport": 25502,
+        "body_ipc_rail_transport": 23507
       },
       "period_min": "2002-01",
-      "period_max": "2023-01",
+      "period_max": "2026-06",
       "regions": 104
     }
   },
   "ok_package_count": 2,
-  "rows": 269518,
+  "rows": 310407,
   "downloaded_need_ids": [
     "D01",
     "D02",

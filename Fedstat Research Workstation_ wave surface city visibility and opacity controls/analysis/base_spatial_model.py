@@ -34,7 +34,7 @@ ADJ = DATA / "geo" / "adjacency_subjects.csv"
 OUT = APP / "index_lab_output" / "base_model"
 OUT.mkdir(parents=True, exist_ok=True)
 
-START, END = "2015-01", "2023-01"
+START, END = "2015-01", "2025-12"  # основное окно концепции 2015-2025; данные есть до 2026-06
 LAGS = [1, 2, 3, 6]
 
 

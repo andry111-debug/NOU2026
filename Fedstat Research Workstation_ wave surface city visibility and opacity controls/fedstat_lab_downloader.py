@@ -276,7 +276,11 @@ def set_checked(dimension: fedstat_base.FilterDimension, selected_ids: Iterable[
         value.checked = value.value_id in selected
 
 
-def configure_filters(dimensions: List[fedstat_base.FilterDimension], series_definitions: List[Dict[str, Any]]) -> None:
+def configure_filters(
+    dimensions: List[fedstat_base.FilterDimension],
+    series_definitions: List[Dict[str, Any]],
+    year_ids: List[str] | None = None,
+) -> None:
     by_id = {dim.object_id: dim for dim in dimensions}
     for dim in dimensions:
         for value in dim.values:
@@ -285,7 +289,8 @@ def configure_filters(dimensions: List[fedstat_base.FilterDimension], series_def
     set_checked(by_id["0"], [INDICATOR_ID])
     set_checked(by_id["30611"], ["950473"])
 
-    year_ids = [value.value_id for value in by_id["3"].values]
+    if year_ids is None:
+        year_ids = [value.value_id for value in by_id["3"].values]
     set_checked(by_id["3"], year_ids)
 
     month_ids = [value.value_id for value in by_id["33560"].values if value.title.lower() in MONTH_ORDER]
@@ -537,37 +542,66 @@ def download_package(
     timeout: int,
 ) -> Dict[str, Any]:
     dimensions, metadata = fedstat_base.parse_filters_from_html(page_html)
-    configure_filters(dimensions, series_definitions)
-    payload = fedstat_base.build_payload(
-        INDICATOR_ID,
-        metadata.get("title") or DATASET_NAME,
-        dimensions,
-    )
-    print(f"POST {package_id}: payload fields {len(payload)}, series {len(series_definitions)}")
-    content, response_info = post_excel(client, payload, timeout)
-    raw_path = save_raw_download(content, payload, response_info, package_id)
-    print(f"Raw response saved: {raw_path}")
+    by_id = {dim.object_id: dim for dim in dimensions}
 
-    ext, ok, message = fedstat_base.detect_file_type(
-        content,
-        str(response_info.get("headers", {}).get("Content-Type", "")),
-        str(response_info.get("url", "")),
-    )
-    if not ok or ext not in {"xlsx", "xls"}:
-        preview_path = RAW_DIR / f"{raw_path.stem}_preview.txt"
-        preview_path.write_text(content[:50000].decode("utf-8", errors="replace"), encoding="utf-8")
-        raise RuntimeError(f"Fedstat did not return Excel data: {message}. Preview: {preview_path}")
+    # Формат .xls ограничен 256 колонками, поэтому полный период (25 лет)
+    # в одну выгрузку не помещается: сервер режет колонки на ~2023-01.
+    # Качаем годы кусками по <=13 лет (<=158 колонок) и склеиваем.
+    year_values = sorted(by_id["3"].values, key=lambda v: v.title)
+    chunks = [year_values[i:i + 13] for i in range(0, len(year_values), 13)]
 
-    frame = normalize_raw_excel(raw_path, series_definitions)
-    if frame.empty:
-        raise RuntimeError("Downloaded Excel file was saved, but normalization produced no rows.")
+    frames: List[pd.DataFrame] = []
+    raw_paths: List[str] = []
+    chunk_errors: List[str] = []
+    for chunk in chunks:
+        label = f"{chunk[0].title}_{chunk[-1].title}"
+        try:
+            configure_filters(dimensions, series_definitions, [v.value_id for v in chunk])
+            payload = fedstat_base.build_payload(
+                INDICATOR_ID,
+                metadata.get("title") or DATASET_NAME,
+                dimensions,
+            )
+            print(f"POST {package_id} years {label}: payload fields {len(payload)}, "
+                  f"series {len(series_definitions)}")
+            content, response_info = post_excel(client, payload, timeout)
+            raw_path = save_raw_download(content, payload, response_info, f"{package_id}_y{label}")
+            raw_paths.append(str(raw_path))
+            print(f"Raw response saved: {raw_path}")
+
+            ext, ok, message = fedstat_base.detect_file_type(
+                content,
+                str(response_info.get("headers", {}).get("Content-Type", "")),
+                str(response_info.get("url", "")),
+            )
+            if not ok or ext not in {"xlsx", "xls"}:
+                preview_path = RAW_DIR / f"{raw_path.stem}_preview.txt"
+                preview_path.write_text(content[:50000].decode("utf-8", errors="replace"), encoding="utf-8")
+                raise RuntimeError(f"Fedstat did not return Excel data: {message}. Preview: {preview_path}")
+
+            chunk_frame = normalize_raw_excel(raw_path, series_definitions)
+            if chunk_frame.empty:
+                print(f"  years {label}: no rows in this chunk")
+            else:
+                frames.append(chunk_frame)
+        except Exception as exc:
+            chunk_errors.append(f"{label}: {exc}")
+            print(f"  years {label} failed: {exc}")
+
+    if not frames:
+        raise RuntimeError("All year chunks empty or failed: " + "; ".join(chunk_errors))
+
+    frame = pd.concat(frames, ignore_index=True)
+    frame = frame.drop_duplicates(["factor_id", "region", "period"], keep="last")
+    frame = frame.sort_values(["factor_id", "region", "period"]).reset_index(drop=True)
     processed_paths = write_processed_files(frame, package_id, series_definitions)
     update_factor_catalog(processed_paths, frame, series_definitions)
 
     return {
         "status": "ok",
         "metadata": metadata,
-        "raw_path": str(raw_path),
+        "raw_paths": raw_paths,
+        "chunk_errors": chunk_errors,
         "processed_paths": [str(path) for path in processed_paths],
         "rows": int(len(frame)),
         "series": frame.groupby("factor_id").size().to_dict(),
