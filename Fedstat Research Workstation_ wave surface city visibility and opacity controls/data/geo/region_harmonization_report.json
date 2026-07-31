@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-07-30T19:30:05",
+  "geoboundaries_api": "https://www.geoboundaries.org/api/current/gbOpen/RUS/ADM1/",
+  "geoboundaries_boundary_id": "RUS-ADM1-28173009",
+  "geoboundaries_boundary_year": "2017",
+  "geoboundaries_adm_unit_count": "83",
+  "geoboundaries_feature_count": 83,
+  "deeone_csv_url": "https://deeone.dev/assets/data/ru-subjects.csv",
+  "fedstat_region_count": 104,
+  "subject_panel_region_count": 85,
+  "counts_by_region_type": {
+    "economic_region": 11,
+    "historical_subregion": 6,
+    "partial_parent_region": 2,
+    "subject": 74,
+    "subject_name_variant": 11
+  },
+  "counts_by_action": {
+    "exclude_aggregate": 11,
+    "exclude_historical_subregion": 6,
+    "exclude_partial_region": 2,
+    "keep": 74,
+    "map_to_canonical": 11
+  },
+  "outputs": {
+    "geojson": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\custom_geoboundaries_rus_adm1.geojson",
+    "geoboundaries_metadata": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\custom_geoboundaries_metadata.json",
+    "deeone_raw": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\internet_ru_subjects_deeone.csv",
+    "deeone_reference": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\regions_reference_internet.csv",
+    "feature_index": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\geoboundaries_feature_index.csv",
+    "harmonization": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\fedstat_region_harmonization.csv",
+    "harmonized_reference": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\regions_reference_fedstat_harmonized.csv",
+    "geo_settings": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\settings\\geo_settings.json"
+  }
+}

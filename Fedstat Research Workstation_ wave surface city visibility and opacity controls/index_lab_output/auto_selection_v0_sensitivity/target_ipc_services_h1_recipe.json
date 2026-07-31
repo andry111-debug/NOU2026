@@ -1,0 +1,53 @@
+{
+  "name": "Автоподбор v0: target_ipc_services, h=1",
+  "target_factor_id": "target_ipc_services",
+  "horizon": 1,
+  "body_terms": [
+    {
+      "factor_id": "body_ipc_passenger_transport",
+      "role": "body",
+      "weight": -1.0,
+      "lag": 2,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_passenger_transport",
+      "role": "body",
+      "weight": -0.8605,
+      "lag": 1,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": 0.5127,
+      "lag": 0,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_rail_transport",
+      "role": "body",
+      "weight": -0.4975,
+      "lag": 2,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_passenger_transport",
+      "role": "body",
+      "weight": -0.4846,
+      "lag": 3,
+      "transform": "period_zscore"
+    }
+  ],
+  "environment_terms": [],
+  "transport_terms": [
+    {
+      "transport_type": "same_federal_district",
+      "weight": 0.35,
+      "lag": 6,
+      "power": 1.0,
+      "max_distance_km": 0.0
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,9 @@
+{
+  "version": "N_89",
+  "created_at": "2026-06-20T13:48:48",
+  "built_in_geojson": "russia_country_outline.geojson",
+  "built_in_reference": "regions_reference.csv",
+  "geojson_source": "Natural Earth low resolution country outline of Russia; public domain Natural Earth data; extracted from local Natural Earth lowres fixture bundled with geospatial Python packages in the build environment.",
+  "region_reference_source": "Embedded practical reference of Russian subjects and administrative centers used by previous program versions; editable/replacable through menu Геооснова.",
+  "note": "Built-in outline is country-level, low-detail. Use menu Геооснова to download or load ADM1 subject-level GeoJSON for more accurate subject borders."
+}

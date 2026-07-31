@@ -1,0 +1,17 @@
+﻿factor_id,rows,regions,period_min,period_max,min,max,zero_count,over_200_count
+body_ipc_air_transport,17680,102,2002-01,2023-01,0.0,308.0,5,15
+body_ipc_diesel,17604,92,2006-01,2023-01,0.0,145.45,6,0
+body_ipc_food_ex_optional,5411,102,2002-01,2006-12,83.92,112.75,0,0
+body_ipc_food_ex_veg_pot_fruit,21848,104,2002-01,2023-01,0.0,113.66,6,0
+body_ipc_food_no_alcohol,21848,104,2002-01,2023-01,0.0,115.12,6,0
+body_ipc_food_optional,5411,102,2002-01,2006-12,93.85,127.82,0,0
+body_ipc_gasoline,21935,104,2002-01,2023-01,0.0,158.87,6,0
+body_ipc_motor_fuel,17517,92,2006-01,2023-01,0.0,139.16,6,0
+body_ipc_nonfood_ex_optional,5411,102,2002-01,2006-12,97.41,109.39,0,0
+body_ipc_nonfood_optional,5411,102,2002-01,2006-12,74.37,141.74,0,0
+body_ipc_passenger_transport,21935,104,2002-01,2023-01,0.0,187.11,6,0
+body_ipc_rail_transport,20115,95,2002-01,2023-01,69.64,200.0,0,0
+target_ipc_all,21848,104,2002-01,2023-01,0.0,146.04,6,0
+target_ipc_food,21848,104,2002-01,2023-01,0.0,115.12,6,0
+target_ipc_nonfood,21848,104,2002-01,2023-01,0.0,115.84,6,0
+target_ipc_services,21848,104,2002-01,2023-01,0.0,371.82,6,3

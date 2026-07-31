@@ -1,0 +1,5 @@
+{
+  "source": "geoBoundaries ADM1 + DEEONE ru-subjects + Fedstat harmonization",
+  "geojson_path": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\custom_geoboundaries_rus_adm1.geojson",
+  "region_reference_path": "C:\\Projects\\_NOU_2026\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\geo\\regions_reference_fedstat_harmonized.csv"
+}

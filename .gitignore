@@ -1,0 +1,31 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- IDEs / editors ---
+.idea/
+.vscode/
+*.iml
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs ---
+**/logs/*.log
+
+# --- Large / regenerable data (lean policy: kept locally, not versioned) ---
+# Raw Fedstat dumps and processed long tables are regenerable via fedstat_lab_downloader.py
+**/data/fedstat_targets/raw/
+**/data/fedstat_targets/processed/
+**/data/geo/cache/
+# 59 MB region boundaries — too large for git
+**/data/geo/custom_geoboundaries_rus_adm1.geojson

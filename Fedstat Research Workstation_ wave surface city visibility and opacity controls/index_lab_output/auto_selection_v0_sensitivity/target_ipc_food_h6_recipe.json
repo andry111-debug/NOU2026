@@ -1,0 +1,45 @@
+{
+  "name": "Автоподбор v0: target_ipc_food, h=6",
+  "target_factor_id": "target_ipc_food",
+  "horizon": 6,
+  "body_terms": [
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": 1.0,
+      "lag": 6,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": 0.4625,
+      "lag": 5,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_ex_veg_pot_fruit",
+      "role": "body",
+      "weight": 0.3344,
+      "lag": 6,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": -0.2765,
+      "lag": 1,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": -0.2566,
+      "lag": 2,
+      "transform": "period_zscore"
+    }
+  ],
+  "environment_terms": [],
+  "transport_terms": [],
+  "notes": ""
+}

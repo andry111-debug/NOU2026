@@ -1,0 +1,53 @@
+{
+  "name": "Автоподбор v0: target_ipc_all, h=1",
+  "target_factor_id": "target_ipc_all",
+  "horizon": 1,
+  "body_terms": [
+    {
+      "factor_id": "body_ipc_food_no_alcohol",
+      "role": "body",
+      "weight": 1.0,
+      "lag": 0,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_nonfood_broad",
+      "role": "body",
+      "weight": 0.855,
+      "lag": 0,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_food_ex_veg_pot_fruit",
+      "role": "body",
+      "weight": 0.8498,
+      "lag": 0,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_nonfood_broad",
+      "role": "body",
+      "weight": 0.5139,
+      "lag": 1,
+      "transform": "period_zscore"
+    },
+    {
+      "factor_id": "body_ipc_nonfood_broad",
+      "role": "body",
+      "weight": 0.3813,
+      "lag": 5,
+      "transform": "period_zscore"
+    }
+  ],
+  "environment_terms": [],
+  "transport_terms": [
+    {
+      "transport_type": "same_federal_district",
+      "weight": 0.35,
+      "lag": 4,
+      "power": 1.0,
+      "max_distance_km": 0.0
+    }
+  ],
+  "notes": ""
+}

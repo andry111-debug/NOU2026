@@ -1,0 +1,8 @@
+{
+  "recipe": "Автоподбор v0: target_ipc_nonfood, h=2",
+  "rows": 21490,
+  "correlation": 0.06691912158615182,
+  "rmse_z": 1.3660426518095832,
+  "direction_accuracy": 0.5150138663096491,
+  "n_eval": 20914
+}

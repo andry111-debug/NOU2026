@@ -1,0 +1,8 @@
+{
+  "recipe": "Автоподбор v0: target_ipc_services, h=1",
+  "rows": 21487,
+  "correlation": 0.06644431506647143,
+  "rmse_z": 1.3663903013296772,
+  "direction_accuracy": 0.5123101100052383,
+  "n_eval": 20999
+}
