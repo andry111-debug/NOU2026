@@ -32,3 +32,5 @@ desktop.ini
 **/data/geo/custom_geoboundaries_rus_adm1.geojson
 # raw OSM dumps (regenerable via analysis/fetch_rail_stations.py)
 **/data/geo/osm_*_raw.json
+# raw climate archives (regenerable via analysis/fetch_climate_ghcn.py)
+**/data/climate/raw/
