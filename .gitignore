@@ -34,3 +34,7 @@ desktop.ini
 **/data/geo/osm_*_raw.json
 # raw climate archives (regenerable via analysis/fetch_climate_ghcn.py)
 **/data/climate/raw/
+# raw EMISS excel chunks (regenerable via analysis/fetch_emiss_generic.py)
+**/data/emiss_downloads/raw/
+# raw census xlsx (one-time download from rosstat mediabank)
+**/data/census/raw/
