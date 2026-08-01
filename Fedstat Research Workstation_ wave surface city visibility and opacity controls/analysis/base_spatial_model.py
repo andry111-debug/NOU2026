@@ -106,6 +106,30 @@ def build_weights(meta: pd.DataFrame) -> dict[str, np.ndarray]:
     print(f"adjacency: edges placed={placed}/{len(edges)}; "
           f"subjects with >=1 neighbour={covered}/{n}")
     out = {"fd": rownorm(W_fd), "dist": rownorm(W_dist), "adj": rownorm(W_adj)}
+    # прямые ЖД-магистрали (D17 v2): вес = число пересекающих границу путей
+    rail_links = DATA / "geo" / "rail_links_subjects.csv"
+    if rail_links.exists():
+        rl = pd.read_csv(rail_links, encoding="utf-8-sig")
+        W_rl = np.zeros((n, n))
+        for a, b, w in zip(rl["subject_a"], rl["subject_b"], rl["n_ways"]):
+            if a in idx and b in idx:
+                W_rl[idx[a], idx[b]] = float(w)
+                W_rl[idx[b], idx[a]] = float(w)
+        print(f"rail lines: links placed={int((W_rl > 0).sum() // 2)}, "
+              f"subjects connected={int((W_rl.sum(axis=1) > 0).sum())}/{n}")
+        out["railline"] = rownorm(W_rl)
+    # дорожная пропускная способность границ (D16 v1): вес = суммарная полосность
+    road_links = DATA / "geo" / "road_capacity_links.csv"
+    if road_links.exists():
+        rd = pd.read_csv(road_links, encoding="utf-8-sig")
+        W_rd = np.zeros((n, n))
+        for a, b, w in zip(rd["subject_a"], rd["subject_b"], rd["total_lanes"]):
+            if a in idx and b in idx:
+                W_rd[idx[a], idx[b]] = float(w)
+                W_rd[idx[b], idx[a]] = float(w)
+        print(f"road capacity: links placed={int((W_rd > 0).sum() // 2)}, "
+              f"subjects connected={int((W_rd.sum(axis=1) > 0).sum())}/{n}")
+        out["roadcap"] = rownorm(W_rd)
     # rail-weighted adjacency: сосед с крупным ЖД-узлом весит больше
     if RAIL.exists():
         rail = pd.read_csv(RAIL, encoding="utf-8-sig").set_index("subject")["rail_stations"]
@@ -193,6 +217,10 @@ def main() -> int:
     }
     if "railadj" in weights:
         models["M4_railadj"] = own + [f"railadj_l{L}" for L in LAGS]
+    if "railline" in weights:
+        models["M5_railline"] = own + [f"railline_l{L}" for L in LAGS]
+    if "roadcap" in weights:
+        models["M6_roadcap"] = own + [f"roadcap_l{L}" for L in LAGS]
     report = {"meta": {"subjects": n_subj, "periods": n_per, "obs": n_obs,
                        "start": START, "end": END, "lags": LAGS}, "models": {}}
 
