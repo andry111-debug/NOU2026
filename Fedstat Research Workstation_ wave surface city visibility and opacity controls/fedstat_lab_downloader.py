@@ -226,10 +226,40 @@ ENVIRONMENT_SERIES = [
     },
 ]
 
+PRODUCT_SERIES = [
+    # товарный диф-тест D23: свинина/алкоголь (treatment) против говядины/птицы
+    # (плацебо) и баранины (обратный тест)
+    {"need_id": "D05", "factor_id": "body_ipc_pork", "title": "ИПЦ свинина",
+     "fedstat_value_id": "1759577", "fedstat_title": "Свинина",
+     "role": ROLE_BODY, "subtype": "тело: мясо", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+    {"need_id": "D05", "factor_id": "body_ipc_beef", "title": "ИПЦ говядина",
+     "fedstat_value_id": "1759581", "fedstat_title": "Говядина",
+     "role": ROLE_BODY, "subtype": "тело: мясо", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+    {"need_id": "D05", "factor_id": "body_ipc_mutton", "title": "ИПЦ баранина",
+     "fedstat_value_id": "1755103", "fedstat_title": "Баранина (кроме бескостного мяса), кг",
+     "role": ROLE_BODY, "subtype": "тело: мясо", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+    {"need_id": "D05", "factor_id": "body_ipc_poultry", "title": "ИПЦ мясо птицы",
+     "fedstat_value_id": "1709800", "fedstat_title": "Мясо птицы",
+     "role": ROLE_BODY, "subtype": "тело: мясо", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+    {"need_id": "D06", "factor_id": "body_ipc_alcohol", "title": "ИПЦ алкогольные напитки",
+     "fedstat_value_id": "1788771", "fedstat_title": "Алкогольные напитки",
+     "role": ROLE_BODY, "subtype": "тело: алкоголь", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+    {"need_id": "D06", "factor_id": "body_ipc_vodka", "title": "ИПЦ водка",
+     "fedstat_value_id": "1788786", "fedstat_title": "Водка",
+     "role": ROLE_BODY, "subtype": "тело: алкоголь", "expected_sign": "+",
+     "allowed_lags": "0,1,2,3,6"},
+]
+
 DOWNLOAD_PACKAGES = {
     "targets_d01_d04": TARGET_SERIES,
     "candidates_d05_d08": CANDIDATE_SERIES,
     "env_d25_utilities": ENVIRONMENT_SERIES,
+    "products_diff_test": PRODUCT_SERIES,
 }
 
 MONTH_ORDER = {

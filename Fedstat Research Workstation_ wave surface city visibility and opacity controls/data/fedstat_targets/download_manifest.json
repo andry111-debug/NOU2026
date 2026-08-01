@@ -1,9 +1,43 @@
 {
-  "created_at": "2026-08-01T01:17:21",
+  "created_at": "2026-08-01T09:36:40",
   "indicator_url": "https://www.fedstat.ru/indicator/31074",
   "indicator_id": "31074",
   "ssl_verification": "disabled because Fedstat certificate validation failed in this environment",
   "packages": {
+    "products_diff_test": {
+      "status": "ok",
+      "metadata": {
+        "indicator_id": "31074",
+        "title": "Индексы потребительских цен на товары и услуги",
+        "unit": "процент"
+      },
+      "raw_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_products_diff_test_y2002_2014_20260801_093520.xls",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\raw\\fedstat_31074_products_diff_test_y2015_2026_20260801_093639.xls"
+      ],
+      "chunk_errors": [],
+      "processed_paths": [
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\fedstat_31074_products_diff_test_long.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_pork.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_beef.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_mutton.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_poultry.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_alcohol.csv",
+        "C:\\Projects\\Маша\\Ноу 2027\\Fedstat Research Workstation_ wave surface city visibility and opacity controls\\data\\fedstat_targets\\processed\\body_ipc_vodka.csv"
+      ],
+      "rows": 127975,
+      "series": {
+        "body_ipc_alcohol": 25045,
+        "body_ipc_beef": 15601,
+        "body_ipc_mutton": 22803,
+        "body_ipc_pork": 15154,
+        "body_ipc_poultry": 24434,
+        "body_ipc_vodka": 24938
+      },
+      "period_min": "2002-01",
+      "period_max": "2026-06",
+      "regions": 104
+    },
     "env_d25_utilities": {
       "status": "ok",
       "metadata": {
@@ -105,9 +139,17 @@
       "regions": 104
     }
   },
-  "ok_package_count": 3,
-  "rows": 329249,
+  "ok_package_count": 4,
+  "rows": 457224,
   "downloaded_need_ids": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
     "D25"
   ]
 }
