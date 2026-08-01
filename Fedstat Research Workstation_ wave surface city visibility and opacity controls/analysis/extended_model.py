@@ -30,6 +30,8 @@ DATA = APP / "data"
 UTIL = DATA / "fedstat_targets" / "processed" / "env_ipc_utilities.csv"
 TOUR = DATA / "geo" / "tourism_poi_by_region.csv"
 AGE = DATA / "emiss_downloads" / "D24_age_structure_subjects.csv"
+AGRI = DATA / "emiss_downloads" / "D10_agri_subjects.csv"
+CLIM = DATA / "climate" / "temp_anomaly_by_region.csv"
 HARM = DATA / "geo" / "fedstat_region_harmonization.csv"
 OUT = APP / "index_lab_output" / "base_model"
 
@@ -96,11 +98,43 @@ def main() -> int:
     cols["util_l0"] = stack(util_panel, "util_l0")
     cols["util_l1"] = stack(util_panel.shift(1), "util_l1")
 
+    # --- сельхоз на душу (гипотеза-гаситель D10): годовое, руб./чел. ---
+    agri = pd.read_csv(AGRI, encoding="utf-8-sig")
+    pop_map = {(r, str(p)): v for r, p, v in
+               zip(age["region"], age["period"], age["total_pop"])}
+    agri_pc_map = {}
+    for r, p, v in zip(agri["region"], agri["period"], agri["value_mln_rub"]):
+        pop = pop_map.get((r, str(p)))
+        if pop and pop > 0:
+            agri_pc_map[(r, str(p))] = v * 1e6 / pop
+    agri_pc = pd.DataFrame(index=panel.index, columns=panel.columns, dtype=float)
+    for per in panel.index:
+        y = str(per)[:4]
+        agri_pc.loc[per] = [agri_pc_map.get((s, y), np.nan) for s in panel.columns]
+    apw = agri_pc.loc[(agri_pc.index >= bsm.START) & (agri_pc.index <= bsm.END)]
+    z_agri = (agri_pc - np.nanmean(apw.values)) / np.nanstd(apw.values)
+
     adj1 = bsm.transported(panel, W, 1)
     inter_tour = adj1.mul(pd.Series(z_tour).reindex(panel.columns), axis=1)
     inter_older = adj1 * z_older
+    inter_agri = adj1 * z_agri
     cols["adjXtour"] = stack(inter_tour, "adjXtour")
     cols["adjXolder"] = stack(inter_older, "adjXolder")
+    cols["adjXagri"] = stack(inter_agri, "adjXagri")
+
+    # --- погодные контроли для E3 (защита adjXagri от коррелированных урожаев) ---
+    clim = pd.read_csv(CLIM, encoding="utf-8-sig")
+    anom = (clim.pivot_table(index="period", columns="region", values="t_anomaly",
+                             aggfunc="mean")
+            .reindex(index=panel.index, columns=panel.columns))
+    cols["wx_l0"] = stack(anom, "wx_l0")
+    cols["wx_l1"] = stack(anom.shift(1), "wx_l1")
+    A = anom.shift(1)
+    avail = (~A.isna()).astype(float).values
+    num = np.nan_to_num(A.values) @ W.T
+    den = avail @ W.T
+    nbwx = np.where(den >= 0.5, num / np.where(den == 0, np.nan, den), np.nan)
+    cols["nbwx_l1"] = stack(pd.DataFrame(nbwx, index=anom.index, columns=anom.columns), "nbwx_l1")
 
     frame = pd.DataFrame(cols).dropna()
     periods = sorted(frame.index.get_level_values("period").unique())
@@ -114,12 +148,14 @@ def main() -> int:
     own = [f"own_l{L}" for L in INFL_LAGS]
     adj = [f"adj_l{L}" for L in INFL_LAGS]
     utils = ["util_l0", "util_l1"]
-    inters = ["adjXtour", "adjXolder"]
+    inters = ["adjXtour", "adjXolder", "adjXagri"]
 
+    weather = ["wx_l0", "wx_l1", "nbwx_l1"]
     specs = {
         "E0_base": own + adj,
         "E1_utilities": own + adj + utils,
         "E2_moderators": own + adj + utils + inters,
+        "E3_weather_robust": own + adj + utils + inters + weather,
     }
     report = {"meta": {"obs": int(len(frame)),
                        "period": f"{periods[0]}..{periods[-1]}"}, "models": {}}
