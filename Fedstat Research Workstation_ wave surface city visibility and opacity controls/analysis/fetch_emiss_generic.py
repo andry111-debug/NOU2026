@@ -48,6 +48,9 @@ TARGETS = [
     ("D20", "58704", "ksr_guests"),
 ]
 
+RETRY_503 = 3          # попыток на кусок при 503
+RETRY_SLEEP = 60.0     # пауза между попытками, сек
+
 
 def log(*a):
     print(*a, flush=True)
@@ -222,9 +225,18 @@ def download_indicator(client, need: str, ind_id: str, slug: str, timeout: int =
         payload = fb.build_payload(ind_id, title, dims)
         body = urllib.parse.urlencode(payload, doseq=True).encode()
         ep = "https://www.fedstat.ru/indicator/data.do?format=excel"
-        req = u.Request(ep, data=body, headers=headers(url), method="POST")
-        with client.open(req, timeout=timeout) as r:
-            content = r.read()
+        content = None
+        for attempt in range(1, RETRY_503 + 1):
+            try:
+                req = u.Request(ep, data=body, headers=headers(url), method="POST")
+                with client.open(req, timeout=timeout) as r:
+                    content = r.read()
+                break
+            except Exception as exc:
+                if attempt == RETRY_503:
+                    raise
+                log(f"    attempt {attempt} failed ({exc}); sleep {RETRY_SLEEP:.0f}s")
+                time.sleep(RETRY_SLEEP)
         RAW_DIR.mkdir(parents=True, exist_ok=True)
         ext, ok, msg = fb.detect_file_type(content, "", "")
         raw = RAW_DIR / f"{slug}_{ind_id}_{lbl}.{ext if ok else 'bin'}"
@@ -254,9 +266,17 @@ def download_indicator(client, need: str, ind_id: str, slug: str, timeout: int =
 
 
 def main() -> int:
+    # CLI: python fetch_emiss_generic.py D11:57039:incomes D11:56791:wages ...
+    targets = TARGETS
+    if len(sys.argv) > 1:
+        targets = []
+        for arg in sys.argv[1:]:
+            need, ind_id, slug = arg.split(":", 2)
+            targets.append((need, ind_id, slug))
+
     client = opener()
     results = []
-    for need, ind_id, slug in TARGETS:
+    for need, ind_id, slug in targets:
         try:
             results.append(download_indicator(client, need, ind_id, slug))
         except Exception as exc:
