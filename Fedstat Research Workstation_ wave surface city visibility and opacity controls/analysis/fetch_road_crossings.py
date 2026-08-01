@@ -48,39 +48,62 @@ def log(*a):
     print(*a, flush=True)
 
 
-def fetch() -> dict:
+CACHE_DIR = GEO / "cache"
+
+
+def fetch_band(op, lon0: float, lon1: float, depth: int = 0) -> list[dict] | None:
+    """Одна полоса с кэшем на диске; при провале — деление пополам."""
     import time as _t
+    cache = CACHE_DIR / f"road_band_{lon0}_{lon1}.json"
+    if cache.exists() and cache.stat().st_size > 100:
+        got = json.loads(cache.read_text(encoding="utf-8"))
+        log(f"  band {lon0}..{lon1}: cached ({len(got)} ways)")
+        return got
+    q = (f"[out:json][timeout:600];"
+         f"way{WAY_FILTER}({LAT_MIN},{lon0},{LAT_MAX},{lon1});"
+         f"out geom;")
+    body = urllib.parse.urlencode({"data": q}).encode()
+    for ep in ENDPOINTS:
+        for attempt in (1, 2):
+            try:
+                log(f"POST band {lon0}..{lon1} -> {ep} (try {attempt})")
+                req = u.Request(ep, data=body, headers={"User-Agent": "nou2027-research/1.0"})
+                with op.open(req, timeout=900) as r:
+                    got = json.loads(r.read().decode("utf-8"))
+                ways = [el for el in got.get("elements", []) if el.get("type") == "way"]
+                CACHE_DIR.mkdir(parents=True, exist_ok=True)
+                cache.write_text(json.dumps(ways, ensure_ascii=False), encoding="utf-8")
+                log(f"  band {lon0}..{lon1}: {len(ways)} ways (cached)")
+                _t.sleep(10)
+                return ways
+            except Exception as exc:
+                log(f"  failed: {type(exc).__name__}: {exc}")
+                _t.sleep(30)
+    if lon1 - lon0 > 5 and depth < 3:
+        mid = (lon0 + lon1) / 2
+        log(f"  band {lon0}..{lon1}: splitting at {mid}")
+        left = fetch_band(op, lon0, mid, depth + 1)
+        right = fetch_band(op, mid, lon1, depth + 1)
+        if left is not None and right is not None:
+            return left + right
+    return None
+
+
+def fetch() -> dict:
     ctx = ssl._create_unverified_context()
     op = u.build_opener(u.HTTPSHandler(context=ctx))
     elements: dict[int, dict] = {}
+    failed = []
     for lon0, lon1 in LON_BANDS:
-        q = (f"[out:json][timeout:600];"
-             f"way{WAY_FILTER}({LAT_MIN},{lon0},{LAT_MAX},{lon1});"
-             f"out geom;")
-        body = urllib.parse.urlencode({"data": q}).encode()
-        got = None
-        for ep in ENDPOINTS:
-            for attempt in (1, 2):
-                try:
-                    log(f"POST band {lon0}..{lon1} -> {ep} (try {attempt})")
-                    req = u.Request(ep, data=body, headers={"User-Agent": "nou2027-research/1.0"})
-                    with op.open(req, timeout=900) as r:
-                        got = json.loads(r.read().decode("utf-8"))
-                    break
-                except Exception as exc:
-                    log(f"  failed: {type(exc).__name__}: {exc}")
-                    _t.sleep(20)
-            if got is not None:
-                break
-        if got is None:
-            raise RuntimeError(f"band {lon0}..{lon1} failed on all endpoints")
-        n_new = 0
-        for el in got.get("elements", []):
-            if el.get("type") == "way" and el["id"] not in elements:
-                elements[el["id"]] = el
-                n_new += 1
-        log(f"  band ways: {len(got.get('elements', []))} (new {n_new}, total {len(elements)})")
-        _t.sleep(10)
+        ways = fetch_band(op, lon0, lon1)
+        if ways is None:
+            failed.append((lon0, lon1))
+            continue
+        for el in ways:
+            elements.setdefault(el["id"], el)
+        log(f"  total unique ways: {len(elements)}")
+    if failed:
+        raise RuntimeError(f"bands failed even after splitting: {failed}")
     return {"elements": list(elements.values())}
 
 
