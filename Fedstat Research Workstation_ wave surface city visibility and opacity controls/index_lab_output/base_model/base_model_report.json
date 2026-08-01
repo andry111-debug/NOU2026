@@ -468,6 +468,89 @@
           "railline_l6"
         ]
       }
+    },
+    "M6_roadcap": {
+      "regressors": [
+        "own_l1",
+        "own_l2",
+        "own_l3",
+        "own_l6",
+        "roadcap_l1",
+        "roadcap_l2",
+        "roadcap_l3",
+        "roadcap_l6"
+      ],
+      "rsq_within": 0.1507,
+      "rsq_overall": 0.12307,
+      "nobs": 10625,
+      "coefs": [
+        {
+          "term": "own_l1",
+          "coef": 0.06272,
+          "se": 0.01463,
+          "t": 4.287,
+          "p": 2e-05
+        },
+        {
+          "term": "own_l2",
+          "coef": -0.05434,
+          "se": 0.01291,
+          "t": -4.209,
+          "p": 3e-05
+        },
+        {
+          "term": "own_l3",
+          "coef": -0.06097,
+          "se": 0.01396,
+          "t": -4.369,
+          "p": 1e-05
+        },
+        {
+          "term": "own_l6",
+          "coef": -0.03004,
+          "se": 0.01347,
+          "t": -2.23,
+          "p": 0.02576
+        },
+        {
+          "term": "roadcap_l1",
+          "coef": 0.14861,
+          "se": 0.01674,
+          "t": 8.877,
+          "p": 0.0
+        },
+        {
+          "term": "roadcap_l2",
+          "coef": -0.03399,
+          "se": 0.01606,
+          "t": -2.116,
+          "p": 0.03435
+        },
+        {
+          "term": "roadcap_l3",
+          "coef": -0.01553,
+          "se": 0.01897,
+          "t": -0.819,
+          "p": 0.41286
+        },
+        {
+          "term": "roadcap_l6",
+          "coef": 0.00187,
+          "se": 0.01816,
+          "t": 0.103,
+          "p": 0.918
+        }
+      ],
+      "joint_transported": {
+        "stat": 79.244,
+        "pval": 0.0,
+        "terms": [
+          "roadcap_l1",
+          "roadcap_l2",
+          "roadcap_l3",
+          "roadcap_l6"
+        ]
+      }
     }
   }
 }
