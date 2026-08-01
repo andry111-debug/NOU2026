@@ -35,3 +35,11 @@ M4_railadj,railadj_l1,0.18337,0.01841,9.958,0.0
 M4_railadj,railadj_l2,-0.06207,0.0203,-3.058,0.00224
 M4_railadj,railadj_l3,-0.01097,0.02019,-0.543,0.5871
 M4_railadj,railadj_l6,0.00852,0.02352,0.362,0.71705
+M5_railline,own_l1,0.06505,0.01518,4.286,2e-05
+M5_railline,own_l2,-0.05303,0.01298,-4.086,4e-05
+M5_railline,own_l3,-0.06006,0.01442,-4.164,3e-05
+M5_railline,own_l6,-0.02757,0.01314,-2.098,0.03589
+M5_railline,railline_l1,0.14084,0.01877,7.504,0.0
+M5_railline,railline_l2,-0.04147,0.016,-2.591,0.00959
+M5_railline,railline_l3,-0.02081,0.01978,-1.052,0.29274
+M5_railline,railline_l6,-0.00452,0.01542,-0.293,0.7693

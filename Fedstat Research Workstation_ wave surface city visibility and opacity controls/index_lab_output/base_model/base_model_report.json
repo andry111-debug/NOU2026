@@ -385,6 +385,89 @@
           "railadj_l6"
         ]
       }
+    },
+    "M5_railline": {
+      "regressors": [
+        "own_l1",
+        "own_l2",
+        "own_l3",
+        "own_l6",
+        "railline_l1",
+        "railline_l2",
+        "railline_l3",
+        "railline_l6"
+      ],
+      "rsq_within": 0.14311,
+      "rsq_overall": 0.10944,
+      "nobs": 10625,
+      "coefs": [
+        {
+          "term": "own_l1",
+          "coef": 0.06505,
+          "se": 0.01518,
+          "t": 4.286,
+          "p": 2e-05
+        },
+        {
+          "term": "own_l2",
+          "coef": -0.05303,
+          "se": 0.01298,
+          "t": -4.086,
+          "p": 4e-05
+        },
+        {
+          "term": "own_l3",
+          "coef": -0.06006,
+          "se": 0.01442,
+          "t": -4.164,
+          "p": 3e-05
+        },
+        {
+          "term": "own_l6",
+          "coef": -0.02757,
+          "se": 0.01314,
+          "t": -2.098,
+          "p": 0.03589
+        },
+        {
+          "term": "railline_l1",
+          "coef": 0.14084,
+          "se": 0.01877,
+          "t": 7.504,
+          "p": 0.0
+        },
+        {
+          "term": "railline_l2",
+          "coef": -0.04147,
+          "se": 0.016,
+          "t": -2.591,
+          "p": 0.00959
+        },
+        {
+          "term": "railline_l3",
+          "coef": -0.02081,
+          "se": 0.01978,
+          "t": -1.052,
+          "p": 0.29274
+        },
+        {
+          "term": "railline_l6",
+          "coef": -0.00452,
+          "se": 0.01542,
+          "t": -0.293,
+          "p": 0.7693
+        }
+      ],
+      "joint_transported": {
+        "stat": 58.943,
+        "pval": 0.0,
+        "terms": [
+          "railline_l1",
+          "railline_l2",
+          "railline_l3",
+          "railline_l6"
+        ]
+      }
     }
   }
 }
